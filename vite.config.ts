@@ -1,8 +1,8 @@
-import react, { reactCompilerPreset } from "@vitejs/plugin-react";
+import path from "node:path";
 import babel from "@rolldown/plugin-babel";
-import { defineConfig } from "vitest/config";
 import tailwindcss from "@tailwindcss/vite";
-import { fileURLToPath, URL } from "node:url";
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
+import { defineConfig } from "vitest/config";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,7 +13,7 @@ export default defineConfig({
 	],
 	resolve: {
 		alias: {
-			"@": fileURLToPath(new URL("./src", import.meta.url)),
+			"@": path.resolve(__dirname, "./src"),
 		},
 	},
 	test: {
