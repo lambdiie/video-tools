@@ -6,8 +6,7 @@ import VideoPlayer from "@/components/VideoPlayer";
 function App() {
 	const [inputValue, setInputValue] = useState("");
 
-	const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const file = event.target.files?.[0];
+	const handleInput = (file: File | undefined) => {
 		if (file) {
 			// Create a local object URL for the uploaded file
 			const url = URL.createObjectURL(file);
