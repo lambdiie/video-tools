@@ -1,7 +1,6 @@
 import { useState } from "react";
-
-import VideoInput from "@/components/VideoInput";
-import VideoPlayer from "@/components/VideoPlayer";
+import VideoEdit from "@/components/video/VideoEdit";
+import VideoInput from "@/components/video/VideoInput";
 
 function App() {
 	const [inputValue, setInputValue] = useState("");
@@ -18,7 +17,7 @@ function App() {
 		<main className="flex flex-col items-center">
 			<h1 className="text-center m-16 text-2xl">lambdiie's video tools</h1>
 			{inputValue ? (
-				<VideoPlayer src={inputValue} />
+				<VideoEdit src={inputValue} />
 			) : (
 				<VideoInput handleInput={handleInput} />
 			)}
