@@ -1,35 +1,60 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import type z from "zod";
+import { Button } from "@/components/ui/button";
+import { Field, FieldLabel } from "@/components/ui/field";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-
-const items = [
-	{ label: "MP4", value: "mp4" },
-	{ label: "MOV", value: "mov" },
-	{ label: "MKV", value: "mkv" },
-];
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import { exportSchema, videoFormats } from "@/export/schema";
 
 export default function ExportForm() {
+	const form = useForm<z.infer<typeof exportSchema>>({
+		resolver: zodResolver(exportSchema),
+		defaultValues: {
+			format: videoFormats[0],
+		},
+	});
+
+	function onSubmit(data: z.infer<typeof exportSchema>) {
+		console.log(data);
+	}
+
 	return (
 		<div className="w-md flex justify-center items-center">
-			<Select items={items}>
-				<SelectTrigger className="w-20">
-					<SelectValue placeholder="Type" />
-				</SelectTrigger>
-				<SelectContent>
-					<SelectGroup>
-						{items.map((item) => (
-							<SelectItem key={item.value} value={item.value}>
-								{item.label}
-							</SelectItem>
-						))}
-					</SelectGroup>
-				</SelectContent>
-			</Select>
+			<form id="export-form" onSubmit={form.handleSubmit(onSubmit)}>
+				<Controller
+					name="format"
+					control={form.control}
+					render={({ field }) => (
+						<Field className="w-20">
+							<FieldLabel>Format</FieldLabel>
+							<Select value={field.value} onValueChange={field.onChange}>
+								<SelectTrigger className="hover:bg-gray-100">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectGroup>
+										{videoFormats.map((format) => (
+											<SelectItem key={format} value={format}>
+												{format}
+											</SelectItem>
+										))}
+									</SelectGroup>
+								</SelectContent>
+							</Select>
+						</Field>
+					)}
+				/>
+			</form>
+			<Button type="submit" form="export-form">
+				Export
+			</Button>
 		</div>
 	);
 }

@@ -5,7 +5,7 @@ export default function VideoEdit({ src }: { src: string }) {
 	return (
 		<div className="flex justify-center gap-4">
 			<VideoPlayer src={src} />
-      <ExportForm />
+			<ExportForm />
 		</div>
 	);
 }
