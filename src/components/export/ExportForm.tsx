@@ -12,17 +12,18 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { exportSchema, videoFormats } from "@/export/schema";
+import { processVideo } from "@/export/processVideo";
 
-export default function ExportForm() {
+export default function ExportForm({ file }: { file: File }) {
 	const form = useForm<z.infer<typeof exportSchema>>({
 		resolver: zodResolver(exportSchema),
 		defaultValues: {
-			format: videoFormats[0],
+			format: videoFormats[0].format,
 		},
 	});
 
 	function onSubmit(data: z.infer<typeof exportSchema>) {
-		console.log(data);
+		processVideo(file, data);
 	}
 
 	return (
@@ -41,8 +42,8 @@ export default function ExportForm() {
 								<SelectContent>
 									<SelectGroup>
 										{videoFormats.map((format) => (
-											<SelectItem key={format} value={format}>
-												{format}
+											<SelectItem key={format.format} value={format.format}>
+												{format.format}
 											</SelectItem>
 										))}
 									</SelectGroup>

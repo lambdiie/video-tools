@@ -44,7 +44,7 @@ export default function VideoInput({
 			</span>
 			<h1>or drag & drop files to start</h1>
 			<p className="text-sm text-gray-600">
-				Supported formats: mp4, mkv, mov, webm, ogg
+				Supported formats: mp4, mkv, mov, webm
 			</p>
 			<input
 				type="file"
