@@ -11,10 +11,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { exportSchema, videoFormats } from "@/export/schema";
 import { processVideo } from "@/export/processVideo";
+import { exportSchema, videoFormats } from "@/export/schema";
+import { useFileStore } from "@/store/store";
 
-export default function ExportForm({ file }: { file: File }) {
+export default function ExportForm() {
+	const file = useFileStore((state) => state.file);
+
 	const form = useForm<z.infer<typeof exportSchema>>({
 		resolver: zodResolver(exportSchema),
 		defaultValues: {

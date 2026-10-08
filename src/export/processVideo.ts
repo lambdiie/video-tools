@@ -14,9 +14,14 @@ import type { exportSchema } from "@/export/schema";
 import { videoFormats } from "@/export/schema";
 
 export async function processVideo(
-	src: File,
+	src: File | null,
 	data: z.infer<typeof exportSchema>,
 ) {
+	if (!src) {
+		console.error("Error: File not found");
+		return;
+	}
+
 	const input = new Input({
 		formats: [MP4, QTFF, MATROSKA, WEBM],
 		source: new BlobSource(src),
@@ -26,7 +31,7 @@ export async function processVideo(
 		(format) => format.format === data.format,
 	)?.class;
 	if (!OutputClass) {
-		console.error("Invalid export format");
+		console.error("Error: Invalid export form");
 		return;
 	}
 
@@ -38,7 +43,7 @@ export async function processVideo(
 	const conversion = await Conversion.init({ input, output });
 	if (!conversion.isValid) {
 		console.error(
-			"Error with initializing conversion: ",
+			"Error: export could not be initialized: ",
 			conversion.discardedTracks,
 		);
 		return;
@@ -52,7 +57,7 @@ export async function processVideo(
 
 	const buffer = output.target.buffer;
 	if (!buffer) {
-		console.error("Error with converting video, output buffer not found");
+		console.error("Error: Output buffer not found");
 		return;
 	}
 

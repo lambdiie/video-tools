@@ -1,4 +1,9 @@
-import { MkvOutputFormat, MovOutputFormat, Mp4OutputFormat, WebMOutputFormat } from "mediabunny";
+import {
+	MkvOutputFormat,
+	MovOutputFormat,
+	Mp4OutputFormat,
+	WebMOutputFormat,
+} from "mediabunny";
 import z from "zod";
 
 export const videoFormats = [
@@ -9,5 +14,5 @@ export const videoFormats = [
 ] as const;
 
 export const exportSchema = z.object({
-	format: z.enum(videoFormats.map(format => format.format)),
+	format: z.enum(videoFormats.map((format) => format.format)),
 });
