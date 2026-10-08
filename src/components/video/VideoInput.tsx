@@ -25,10 +25,7 @@ export default function VideoInput({
 				setDragging(false);
 				handleInput(e.dataTransfer.files[0]);
 			}}
-			className={cn(
-				"group flex flex-col justify-center items-center w-3xl aspect-video border-2 border-dashed border-blue-700 rounded-md *:pointer-events-none",
-				dragging && "bg-gray-100",
-			)}
+			className="flex flex-col justify-center items-center w-3xl aspect-video border-2 border-dashed border-blue-700 rounded-md hover:bg-gray-50"
 		>
 			<CloudUpload
 				className="size-24 bg-gray-200 rounded-full p-4 text-blue-700"
@@ -36,8 +33,8 @@ export default function VideoInput({
 			/>
 			<span
 				className={cn(
-					buttonVariants({ variant: "outline" }),
-					"pointer-events-none group-hover:bg-accent group-focus-visible:ring-2 m-4",
+					buttonVariants({ size: "lg" }),
+					"focus-visible:ring-2 p-4 m-4 rounded-full hover:cursor-pointer",
 				)}
 			>
 				Choose a File
