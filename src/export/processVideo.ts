@@ -16,6 +16,7 @@ import { videoFormats } from "@/export/schema";
 export async function processVideo(
 	src: File | null,
 	data: z.infer<typeof exportSchema>,
+	setProgress: (progress: number) => void,
 ) {
 	if (!src) {
 		console.error("Error: File not found");
@@ -50,7 +51,7 @@ export async function processVideo(
 	}
 
 	conversion.onProgress = (progress: number) => {
-		// `progress` is a number between 0 and 1 (inclusive)
+		setProgress(Math.round(progress * 100));
 	};
 
 	await conversion.execute();

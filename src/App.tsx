@@ -15,11 +15,7 @@ function App() {
 	return (
 		<main className="flex flex-col items-center">
 			<h1 className="text-center m-16 text-2xl">lambdiie's video tools</h1>
-			{file ? (
-				<VideoEdit />
-			) : (
-				<VideoInput handleInput={handleInput} />
-			)}
+			{file ? <VideoEdit /> : <VideoInput handleInput={handleInput} />}
 		</main>
 	);
 }

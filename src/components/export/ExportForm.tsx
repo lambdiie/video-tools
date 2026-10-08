@@ -1,8 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type z from "zod";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
+import {
+	Progress,
+	ProgressLabel,
+	ProgressValue,
+} from "@/components/ui/progress";
 import {
 	Select,
 	SelectContent,
@@ -16,8 +22,10 @@ import { exportSchema, videoFormats } from "@/export/schema";
 import { useFileStore } from "@/store/store";
 
 export default function ExportForm() {
-	const file = useFileStore((state) => state.file);
+	const [progress, setProgress] = useState(0);
+	const [inProgress, setInProgress] = useState(false);
 
+	const file = useFileStore((state) => state.file);
 	const form = useForm<z.infer<typeof exportSchema>>({
 		resolver: zodResolver(exportSchema),
 		defaultValues: {
@@ -25,8 +33,10 @@ export default function ExportForm() {
 		},
 	});
 
-	function onSubmit(data: z.infer<typeof exportSchema>) {
-		processVideo(file, data);
+	async function onSubmit(data: z.infer<typeof exportSchema>) {
+		setInProgress(true);
+		await processVideo(file, data, setProgress);
+		setInProgress(false);
 	}
 
 	return (
@@ -56,6 +66,12 @@ export default function ExportForm() {
 					)}
 				/>
 			</form>
+			{inProgress && (
+				<Progress value={progress}>
+					<ProgressLabel>Exporting: </ProgressLabel>
+					<ProgressValue />
+				</Progress>
+			)}
 			<Button type="submit" form="export-form">
 				Export
 			</Button>
