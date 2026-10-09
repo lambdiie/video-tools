@@ -1,11 +1,14 @@
-import ExportForm from "@/components/export/ExportForm";
+import ExportSidebar from "@/components/export/ExportSidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import VideoPlayer from "@/components/video/VideoPlayer";
 
 export default function VideoEdit() {
 	return (
-		<div className="flex justify-center gap-4">
-			<VideoPlayer />
-			<ExportForm />
-		</div>
+		<SidebarProvider className="flex justify-center">
+			<SidebarInset>
+				<VideoPlayer />
+			</SidebarInset>
+			<ExportSidebar />
+		</SidebarProvider>
 	);
 }

@@ -1,5 +1,5 @@
 import { CloudUpload } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -9,7 +9,6 @@ export default function VideoInput({
 	handleInput: (file: File | undefined) => void;
 }) {
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [dragging, setDragging] = useState(false);
 
 	return (
 		<button
@@ -17,12 +16,9 @@ export default function VideoInput({
 			onClick={() => inputRef.current?.click()}
 			onDragOver={(e) => {
 				e.preventDefault();
-				setDragging(true);
 			}}
-			onDragLeave={() => setDragging(false)}
 			onDrop={(e) => {
 				e.preventDefault();
-				setDragging(false);
 				handleInput(e.dataTransfer.files[0]);
 			}}
 			className="flex flex-col justify-center items-center w-3xl aspect-video border-2 border-dashed border-blue-700 rounded-md hover:bg-gray-50"
