@@ -69,7 +69,7 @@ export async function processVideo(
 	// Download the file
 	const a = document.createElement("a");
 	a.href = url;
-	a.download = `output.${output.format.fileExtension}`;
+	a.download = `output${output.format.fileExtension}`;
 	document.body.appendChild(a);
 	a.click();
 	document.body.removeChild(a);
