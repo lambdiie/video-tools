@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/sidebar";
 import { processVideo } from "@/export/processVideo";
 import { defaultSchemaValues, exportSchema } from "@/export/schema";
+import { getFileName } from "@/lib/utils";
 import { useFileStore } from "@/store/store";
 
 export default function ExportSidebar() {
@@ -27,7 +28,10 @@ export default function ExportSidebar() {
 	const file = useFileStore((state) => state.file);
 	const form = useForm<z.infer<typeof exportSchema>>({
 		resolver: zodResolver(exportSchema),
-		defaultValues: defaultSchemaValues,
+		defaultValues: {
+			...defaultSchemaValues,
+			name: file ? getFileName(file) : defaultSchemaValues.name,
+		},
 	});
 
 	async function onSubmit(data: z.infer<typeof exportSchema>) {
