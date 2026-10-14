@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/sidebar";
 import { processVideo } from "@/export/processVideo";
 import { defaultSchemaValues, exportSchema } from "@/export/schema";
-import { getFileName } from "@/lib/utils";
+import { stripExtension } from "@/lib/utils";
 import { useFileStore } from "@/store/store";
 
 export default function ExportSidebar() {
@@ -30,7 +30,7 @@ export default function ExportSidebar() {
 		resolver: zodResolver(exportSchema),
 		defaultValues: {
 			...defaultSchemaValues,
-			name: file ? getFileName(file) : defaultSchemaValues.name,
+			name: file ? stripExtension(file.name) : defaultSchemaValues.name,
 		},
 	});
 
