@@ -14,5 +14,11 @@ export const videoFormats = [
 ] as const;
 
 export const exportSchema = z.object({
+	name: z.string().optional(),
 	format: z.enum(videoFormats.map((format) => format.format)),
 });
+
+export const defaultSchemaValues = {
+	name: "Output",
+	format: videoFormats[0].format,
+};

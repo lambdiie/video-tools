@@ -4,6 +4,6 @@ import App from "@/App";
 describe("App component", () => {
 	it("renders App", () => {
 		render(<App />);
-		expect(screen.getByText(/hey/i)).toBeInTheDocument();
+		expect(screen.getByText(/video tools/i)).toBeInTheDocument();
 	});
 });

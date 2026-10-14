@@ -67,9 +67,12 @@ export async function processVideo(
 	const url = URL.createObjectURL(blob);
 
 	// Download the file
+	const filename = data.name ?? "Output";
+	console.log(filename);
+
 	const a = document.createElement("a");
 	a.href = url;
-	a.download = `output${output.format.fileExtension}`;
+	a.download = filename + output.format.fileExtension;
 	document.body.appendChild(a);
 	a.click();
 	document.body.removeChild(a);

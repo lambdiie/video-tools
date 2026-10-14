@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import type z from "zod";
+import SidebarCollapsible from "@/components/components/SidebarCollapsible";
 import ConvertForm from "@/components/export/ConvertForm";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,11 +14,10 @@ import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
-	SidebarGroup,
 	SidebarHeader,
 } from "@/components/ui/sidebar";
 import { processVideo } from "@/export/processVideo";
-import { exportSchema, videoFormats } from "@/export/schema";
+import { defaultSchemaValues, exportSchema } from "@/export/schema";
 import { useFileStore } from "@/store/store";
 
 export default function ExportSidebar() {
@@ -27,9 +27,7 @@ export default function ExportSidebar() {
 	const file = useFileStore((state) => state.file);
 	const form = useForm<z.infer<typeof exportSchema>>({
 		resolver: zodResolver(exportSchema),
-		defaultValues: {
-			format: videoFormats[0].format,
-		},
+		defaultValues: defaultSchemaValues,
 	});
 
 	async function onSubmit(data: z.infer<typeof exportSchema>) {
@@ -39,16 +37,21 @@ export default function ExportSidebar() {
 	}
 
 	return (
-		<Sidebar side="right" collapsible="none">
+		<Sidebar side="right" collapsible="none" className="p-2">
 			<SidebarHeader>
 				<h1>lambdiie's video tools</h1>
 			</SidebarHeader>
 			<SidebarContent>
 				<FormProvider {...form}>
-					<form id="export-form" onSubmit={form.handleSubmit(onSubmit)}>
-						<SidebarGroup>
+					<form
+						id="export-form"
+						onSubmit={form.handleSubmit(onSubmit, (errors) =>
+							console.log(errors),
+						)}
+					>
+						<SidebarCollapsible header="Convert" defaultOpen>
 							<ConvertForm />
-						</SidebarGroup>
+						</SidebarCollapsible>
 					</form>
 				</FormProvider>
 			</SidebarContent>
